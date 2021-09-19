@@ -1,0 +1,40 @@
+Binary Search Tree is a node-based binary tree data structure which has the following properties:
+1.The left subtree of a node contains only nodes with keys lesser than the node’s key.
+2.The right subtree of a node contains only nodes with keys greater than the node’s key.
+3.The left and right subtree each must also be a binary search tree. 
+4.There must be no duplicate nodes.
+
+Normal time complexity is O(n) but if the tree is left or right skewed(worst case) then its O(n).
+The time complexity of all self-balancing trees is O(logn) for all cases. Eg:AVL, red-black, splay , b, b+
+
+DUPLICATES
+In a Binary Search Tree (BST), all keys in left subtree of a key must be smaller and all keys in right subtree must be greater. So a Binary Search Tree by definition has distinct keys and duplicates in binary search tree are not allowed.
+To handle duplicates u can do
+/* A utility function to insert a new node with given key in BST */
+struct node* insert(struct node* node, int key)
+{
+    /* If the tree is empty, return a new node */
+    if (node == NULL) return newNode(key);
+ 
+    // If key already exists in BST, icnrement count and return
+    if (key == node->key)
+    {
+       (node->count)++;
+        return node;
+    }
+ 
+    /* Otherwise, recur down the tree */
+    if (key < node->key)
+        node->left  = insert(node->left, key);
+    else
+        node->right = insert(node->right, key);
+ 
+    /* return the (unchanged) node pointer */
+    return node;
+}
+The tree will look like this:
+  		  12(3)
+       /     \
+     10(2)    20(1)
+    /    \       
+ 9(1)   11(1)   

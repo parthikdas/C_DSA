@@ -1,0 +1,90 @@
+-> Balanced m-order tree.
+-> Generalization of BST in which a node can have more than one key and more than 2 children.
+-> Maintains Sorted data.
+-> All leaf nodes must be at same level.
+-> B-tree order m has following properties:
+	- Every node has max m children.
+	- Min children : leaf->0, root->2, internal nodes->[m/2]	(ceiling value , eg: m=5 then it will [2.5]=3)
+	- Every nodes has max m-1 keys.
+	- Min keys : root->1, all other nodes->[m/2]-1
+
+Insertion example:
+	Question: Create a B tree of order 3 by inserting 1 to 10
+	Things to remember: m=3, max children = m = 3, max no of keys = m-1 = 2.
+	Ans:
+						 ___ __
+		1.				|_1_|__|
+
+					 	 ___ ___
+		2.			    |_1_|_2_|
+
+						 ___ ___
+		3.				|_1_|_2_|3
+
+						 ___ __
+		4.				|_2_|__|
+					 __ /__	   _\_ __
+				  	|_1_|__|  |_3_|__|
+
+				  		 ___ __
+		5.				|_2_|__|
+					 ___ /_	   _\_ ___
+				  	|_1_|__|  |_3_|_4_|
+
+				  		 ___ __
+		6.				|_2_|__|
+					 __ /__    _\_ ___
+				 	|_1_|__|  |_3_|_4_|5	// consider 5 there and find the middle element and put it in parent
+
+		 				 ___ ___
+		7.				|_2_|_4_|			// 4 was middle so we put it
+				 ___ __	/ __| __ \ ___ __
+		  		|_1_|__| |_3_|__| |_5_|__|     // 1 is left of 2, 3 is in right of 2 and left of 4, 5 is right of 4
+
+		  				 ___ ___
+		8.				|_2_|_4_|
+				 ___ __	/ __| __ \ ___ ___
+		  		|_1_|__| |_3_|__| |_5_|_6_|
+
+		  				 ___ ___
+		9.				|_2_|_4_|
+				 ___ __	/ __| __ \ ___ ___
+		  		|_1_|__| |_3_|__| |_5_|_6_|7
+
+		  					 ___ __
+		10.					|_4_|__|
+					 ___ __	/	   \ ___ __
+					|_2_|__|   		|_6_|__|
+			   ___ __/   __\ __	   __/ __   \__ __
+			  |_1_|__|  |_3_|__|  |_5_|__| |_7_|__|
+
+		  					 ___ __
+		11.					|_4_|__|
+					 ___ __	/	   \ ___ __
+					|_2_|__|   		|_6_|__|
+			   ___ __/   __\ __	   __/ __   \__ ___
+			  |_1_|__|  |_3_|__|  |_5_|__| |_7_|_8_|
+
+		  					 ___ __
+		12.					|_4_|__|
+					 ___ __	/	   \ ___ __
+					|_2_|__|   		|_6_|__|
+			   ___ __/   __\ __	   __/ __   \__ __
+			  |_1_|__|  |_3_|__|  |_5_|__| |_7_|_8_|9
+
+		  					 ___ __
+		14.					|_4_|__|
+					___ __ /	   \ ___ ___
+				   |_2_|__|   		|_6_|_8_|
+		   ___ __/  ___ \_	 ___ __	/  _|_ __ \ ___ __
+		  |_1_|__| |_3_|__| |_5_|__|  |_7_|__| |_9_|__|
+
+		  					 ___ __
+		14.					|_4_|__|
+					___ __ /	   \ ___ ___
+				   |_2_|__|   		|_6_|_8_|
+		   ___ __/  ___ \_	 ___ __	/  _|_ __ \ ___ ____
+		  |_1_|__| |_3_|__| |_5_|__|  |_7_|__| |_9_|_10_|
+		  
+
+

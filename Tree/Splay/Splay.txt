@@ -1,0 +1,126 @@
+It is also a self-balancing tree. Insert, search and delete operations are followed by splaying. So, basically search+splaying, insert+splaying, delete+splaying.
+
+Splay Tree are roughly balanced BST.
+
+Rotations in splay trees:
+	1. Zig Rotation (Right Rotation): //Case2(i)
+		So searching 7 will make  7
+								 /\
+								1  10
+								   /\
+								  9  20
+								  	  \
+								  	  30
+	2. Zag Rotation (Left Rotation): //Case2(ii)
+		So searching 20 will make  20
+								   / \
+								  10  30
+								 /
+								7
+							   /\
+							   1 9
+	3. Zig Zig Rotation (2 Right Rotations): //Case3
+		So searching 1 
+		 		10						7						1
+				/ \					   / \					   / \
+			   7   15		Zig       1	 10			Zig		  -1  7
+			  /\   / \		---->	 /	 / \		---->		   \
+			 1  9 13  20			-1  9   15					    10
+			/			\                   /\					   / \
+		   -1			 30				   13 20				  9  15	
+		   										\					 / \
+		   										30					13  20
+		   																 \
+		   																  30
+	4. Zag Zag Rotation (2 Left Rotations): //Case3
+		So searching 20
+			     10						15						20
+				/ \					   / \					    / \
+			   7   15		Zag      10	  20		Zag		   15  30
+			  /\   / \		---->	 /\	   \		---->	  /
+			 1  9 13  20			7  13   30				 10    
+			/			\          / \      				 / \   
+		   -1			 30		  1	  9						7	13   							
+		   						 /						   / \
+		   						-1						  1   9
+		   												 /
+		   												-1
+   5. Zig Zag Rotations (Right left Rotations):
+   	    So searching 13
+	   			10						10						13
+				/ \					   / \					    / \
+			   7   15		Zig       7	  13		Zag		   10  15
+			  /\   / \		---->	 /\	  / \		---->	  / \   /\
+			 1  9 13  20			1  9 11 15				 7  11 14 20
+			/	/ / \	\          /   /    / \				/ \        \
+		   -1  8 11 14	 30		  -1  8    14  20		    1  9       30
+		   										 \		   /   /
+		   										 30       -1  8
+	6. Zag Zig Rotations (Left Right Rotations):
+		So searching 9
+			   	10						10						 9
+				/ \					   / \					    / \
+			   7   15		Zag       9	  15		Zig		   7   10
+			  /\   / \		---->	 /	  / \		---->	  / \   \
+			 1  9 13  20			7    13 20				 1  8   15
+			/	/ / \	\          / \  / \  \				/       / \
+		   -1  8 11 14	 30		  1  8 11 14  30		   -1      13  20	
+		   						 /								  / \	\
+		   						-1				 				 11 14	 30
+
+1.Search+splaying:
+			10
+			/\
+		   7  20
+		  /\	\
+		 1  9    30
+	Here we want to find 7, so after searching we will make 7 the root of the tree.
+
+	Case1: Search item is root node. Then we will not do splaying.
+	Case2: Search item is child of root node. (No grandparent)
+			|->Left child
+			|->Right child
+	Case3: Search item has grandparent.
+
+	Another Example:
+	         100                      100                       [20]
+	         /  \                    /   \                        \ 
+	       50   200                50    200                      50
+	      /          search(20)    /          search(20)         /  \  
+	     40          ======>     [20]         ========>         30   100
+	    /            1. Zig-Zig    \          2. Zig-Zig         \     \
+	   30               at 40       30            at 100         40    200  
+	  /                               \     
+	[20]                              40
+
+2.Insertion+splaying:
+	we are inserting 15, 10, 17, 7
+	1. first nothing was there so root will be 15
+	2.	15	zag	10
+	    /	-->	 \
+	   10		  15
+	3. 10			15				17
+		\   Zig     / \     Zig  	/
+		15	-->	   10  17	-->	  15
+		 \						  /	
+		 17						10
+	4. 		17			17				17		7
+			/   		/				/		 \
+		   15   Zig	   10		Zig	   7	Zig	  17
+		   /	-->    / \		-->		\	-->	  /
+		  10          7   15		    10       10
+		  /							     \        \
+		 7								 15		   15
+		 
+Others:
+	Advantage of splay tree:
+		One time we are searching 9 O(logn) then it became the root after that if again we are searching for 9 it will be at root so O(1) time.
+		So in practical situations splay trees are better performing than AVL tree and red black tree.
+		1. No extra info req. Like it was required to store balance factor in AVL tree, colour in red-black tree.
+		2. Fastest type of BST for many practical situations.
+		3. Easy implementation.
+		4. Better performance because frequently accessed notes will be near to the root.
+	Applications:
+		These are used in gcc compilers.These are also used in implementation of cache memory.Cache-the frequently use data is stored it in cache, so that we can access the data easily. 
+	DrawBack:
+		As these trees are not strictly balanced so height maybe linear so operations may take Theta(n) but thats rare.
