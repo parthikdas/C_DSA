@@ -3,6 +3,7 @@ Sentence is Panagram(means all char a-z is preset):-
 bool checkIfPangram(char * s){//ascii of a-z is 97-122 so i am using that
     //int a[123]={0};
     int *a=(int*)malloc(sizeof(int)*123);//as malloc intializes it 0
+    //dont need to use malloc for 0 just do int a[123]={}
     for (int i=0;i<97;i++) {
         a[i]=1;
     }
@@ -19,8 +20,9 @@ OR
 
 bool checkIfPangram(char * s){//ascii is 97-97, 98-97
     //int a[26]={0}; //so instead of making array 123 we can do 33
-    int *a=(int*)malloc(sizeof(int)*26);//as malloc intializes it 0
+    //int *a=(int*)malloc(sizeof(int)*26);//as malloc intializes it 0
     //or use memset(a,0,sizeof(int));
+    int a[26]={};// if u do just int a[26] then it will be filled with garbage value
     for (int i=0;i<strlen(s);i++){
         a[(int)s[i]-97] = 1;
     }

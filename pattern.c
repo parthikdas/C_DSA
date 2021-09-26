@@ -286,7 +286,19 @@ void pattern17(int n){
 // ****  ****
 // **********
 void pattern18(int n){
-
+	for(int i=0;i<2*n;i++){
+		for(int j=0;j<2*n;j++){
+			printf(j<n? // row basis
+				i<n? // col basis
+					j<n-i?"*":" " :
+					j<=i-n?"*":" "
+				:i<n? // col basis
+					j<n+i?" ":"*" :
+					j<2*n-(i-n+1)?" ":"*"
+			);
+		}
+		printf("\n");
+	}
 }
 // Pattern 19
 // *        *
@@ -299,7 +311,19 @@ void pattern18(int n){
 // **      **
 // *        *
 void pattern19(int n){
-
+	for(int i=0;i<2*n-1;i++){
+		for(int j=0;j<2*n;j++){
+			printf(j<n? // row basis
+				i<n? // col basis
+					j<=i?"*":" " :
+					j<2*n-i-1?"*":" "
+				:i<n? // col basis
+					j<2*n-i-1?" ":"*":
+					j<i+1?" ":"*"
+			);
+		}
+		printf("\n");
+	}
 }
 // Pattern 20
 // ****
@@ -322,12 +346,12 @@ void pattern20(int n){
 // 7  8  9  10
 // 11 12 13 14 15
 void pattern21(int n){
-    for(int i=1;i<=n;i++){
-        for(int j=i;j<=i*2-i;j++){
-            printf("%d ",j);
-        }
-        printf("\n");
-    }
+    // for(int i=1;i<=n;i++){
+    //     for(int j=i;j<=i*2-i;j++){
+    //         printf("%d ",j);
+    //     }
+    //     printf("\n");
+    // }
 }
 // Pattern 22
 // 1
@@ -402,26 +426,13 @@ void pattern27(int n){
 void pattern28(int n){
 
 }
-// Pattern 29      
-//    *        *
-//    **      **
-//    ***    ***
-//    ****  ****
-//    **********
-//    ****  ****
-//    ***    ***
-//    **      **
-//    *        *
-void pattern29(int n){
-
-}
-// Pattern 30
+// Pattern 29
 //         1
 //       2 1 2
 //     3 2 1 2 3
 //   4 3 2 1 2 3 4
 // 5 4 3 2 1 2 3 4 5
-void pattern30(int n){
+void pattern29(int n){
     for(int i=1;i<=n;i++){
         // for(int j=1;j<i*2;j++){ // if in the left there were no space triangle then this for loop would be fine
         //     printf("%d ",j<=i?i-j+1:j-i+1);
@@ -436,7 +447,7 @@ void pattern30(int n){
         printf("\n");
     }
 }
-// Pattern 31
+// Pattern 30
 //  4 4 4 4 4 4 4  
 //  4 3 3 3 3 3 4   
 //  4 3 2 2 2 3 4   
@@ -444,16 +455,16 @@ void pattern30(int n){
 //  4 3 2 2 2 3 4   
 //  4 3 3 3 3 3 4   
 //  4 4 4 4 4 4 4   
-void pattern31(int n){
+void pattern30(int n){
 
 }
-// Pattern 32
+// Pattern 31
 //    E
 //    D E
 //    C D E
 //    B C D E
 //    A B C D E
-void pattern32(int n){
+void pattern31(int n){
     for(int i=n;i>0;i--){
         for(int j=i;j<=n;j++){
             printf("%c ",j+64);
@@ -461,22 +472,22 @@ void pattern32(int n){
         printf("\n");
     }
 }
-// Pattern 33
+// Pattern 32
 // a
 // B c
 // D e F
 // g H i J
 // k L m N o
-void pattern33(int n){
+void pattern32(int n){
 
 }
-// Pattern 34
+// Pattern 33
 // E D C B A
 // D C B A
 // C B A
 // B A
 // A
-void pattern34(int n){
+void pattern33(int n){
     for(int i=65;i<n+65;i++){ // ascii of A is 65
         for(int j=n+64;j>=i;j--){
             printf("%c ",j);
