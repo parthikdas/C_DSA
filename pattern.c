@@ -346,12 +346,14 @@ void pattern20(int n){
 // 7  8  9  10
 // 11 12 13 14 15
 void pattern21(int n){
-    // for(int i=1;i<=n;i++){
-    //     for(int j=i;j<=i*2-i;j++){
-    //         printf("%d ",j);
-    //     }
-    //     printf("\n");
-    // }
+    int a=0;
+    for(int i=1;i<=n;i++){
+        for(int j=0;j<i;j++){
+            a++;
+            printf("%d ",a);
+        }
+        printf("\n");
+    }
 }
 // Pattern 22
 // 1
@@ -496,6 +498,6 @@ void pattern33(int n){
     }
 }
 int main(){
-    pattern21(5);
+    pattern22(5);
     return 0;
 }
