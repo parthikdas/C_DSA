@@ -9,7 +9,7 @@ int main(){
 	int n,a,b;
 	scanf("%d%d%d",&a,&b,&n);
 	for(int i=0;i<n;i++){
-		if(i&1){x
+		if(i&1){
 			printf("%d ",a);a*=3;
 		} else {
 			printf("%d ",b);b*=2;

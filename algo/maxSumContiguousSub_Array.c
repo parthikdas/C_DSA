@@ -1,7 +1,6 @@
 // Print the max sum of contiguous sub-array.
 // Used Kadane's algo here
 #include <stdio.h>
-using namespace std;
 int main()
 {
     int t;
@@ -16,7 +15,7 @@ int main()
             sofar+=a[i];
             if(sofar > max) max=sofar;
         }
-        cout<<max<<endl;
+        printf("%d\n",max);
     }
 	return 0;
 }

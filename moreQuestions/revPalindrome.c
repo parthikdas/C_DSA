@@ -28,6 +28,9 @@ int rev(int inum){ //Function to reverse a number
     }
     return ians;
 }
+int BETTERpalindrome(int inum){// Function to check if number is palindrome or not
+    return inum == rev(inum);
+}
 int palindrome(int inum){// Function to check if number is palindrome or not
     int ifirst = idigits&1? inum/(int)pow(10,idigits/2+1): inum/(int)pow(10,idigits/2); // to get the ifirst part
     // if number of idigits are odd then, n/(int)pow(10,idigits/2+1) eg:n=123, idigits=3 ifirst=123/pow(10,1+1), ifirst = 123/100 = 1
