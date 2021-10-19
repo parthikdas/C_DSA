@@ -61,3 +61,20 @@ int main() {
 	}
 
 */
+/*	Another code
+	char s[1000];
+	cin>>s;
+	int len = strlen(s),arr[1000],i,check=1,temp;
+	for(i=0;i<len;i++){
+		arr[i]=s[i]-48;
+		if(i==0) temp=arr[0];
+		else {
+			if(arr[i]!=temp){
+				check++;
+				temp=!temp;
+			}
+		}
+	}
+	cout<<check;
+	return 0;
+*/
