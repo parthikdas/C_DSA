@@ -68,6 +68,30 @@ void join2(struct inode **ihead1,struct inode *ihead2){
     }
     
 }
+// Hacker rank sol
+struct inode* mergeLists(struct inode* head1, struct inode* head2) {
+    if(head1->data > head2->data){
+        struct inode* temp = head2;
+        head2 = head2->next;
+        temp->next = head1;
+        head1 = temp;
+    }
+    struct inode* temp = head1;
+    while(head2 && temp){
+        while(temp->next && temp->next->data <= head2->data) temp = temp->next;
+        printf("%d",temp->data);
+        struct inode* temp1 = head2;
+        head2 = head2->next;
+        temp1->next = temp->next;
+        temp->next = temp1;
+    }
+    while(head2){// for remaining elements
+        struct inode* temp1 = head2;
+        temp->next = temp1;
+        head2 = head2->next;
+    }
+    return head1;
+}
 /*
 Merge is one of those nice recursive problems where the recursive solution code is much cleaner than the iterative code. You probably wouldn’t want to use the recursive version for production code, however, because it will use stack space which is proportional to the length of the lists.  
 
