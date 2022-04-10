@@ -18,4 +18,14 @@ int main() {
     scanf("%d",&n);
     sieve(n);
     return 0;
-}
+} 
+
+/*
+ Not sieve:
+    int primeArr[n],k=0;
+    for(int i=2;i<=n;i++) {
+        for(int j=2;j*j<=n;j++) {
+            if(!(i%j)) {primeArr[k++] = i;break;}
+        }
+    }
+*/

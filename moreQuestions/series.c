@@ -18,3 +18,21 @@ int main(){
 	}
 	return 0;
 }
+
+// 1,1,2,4,4,9,8,16,16,25,32,36,64,49,128,64 
+// odd term 2 power i and even is i*i
+#include <iostream>
+#include <math.h>
+using namespace std;
+int main() {
+    int n;
+    cin>>n;
+    if(n&1) { // odd
+        n/=2;
+        cout<<(int)pow(2,n)<<",";
+    } else { // even
+        n/=2;
+        cout<<n*n<<",";
+    }
+    return 0;
+}
