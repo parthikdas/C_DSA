@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<style>
+    	input {
+        	height:30px;
+            font-size:20px;
+        }
+    </style>
+</head>
+<body>
+	<input type='text' id='name' list='suggestions' size='50px' placeholder='Type the color'>
+    <datalist id='suggestions' value='suggestions'></datalist>
+    <script>
+    	let suggestions = document.getElementById('suggestions')
+        let colors=["darkviolet","violet","purple","indigo","navy","blue","skyblue","cadetblue","darkgreen","green","chartreuse","yellow","orange","darkred","red","brown","pink","hotpink","deeppink","black"]
+        colors.forEach(color => {
+        	let div = document.createElement('option')
+            div.value = color
+            div.innerHTML = 'This is the description of ' + color
+            suggestions.append(div)
+        })
+    </script>
+</body>
+
+</html>
+

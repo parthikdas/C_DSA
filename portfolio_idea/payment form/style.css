@@ -1,0 +1,23 @@
+body{
+    background-color: burlywood;
+}
+input:focus{
+    background-color: lightblue;
+}
+textarea:focus{
+    background-color: lightblue;
+}
+h1{
+    color : orange;
+    text-align: center;
+    background-color: brown;
+}
+h2{
+    color :rgb(141, 24, 24);
+}
+h1+p{
+    color:rgb(15, 37, 238);
+}
+span{
+    background-color: rgba(128, 128, 128, 0.274);
+}

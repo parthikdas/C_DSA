@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login System</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav class="navbar">
+        <h2 class="brand">File Handling</h2>
+        <h3 id="userName">Hi, User</h3>
+    </nav>
+    <div id="loginSection">
+        <div class="box">
+            <div class="show-box">
+                <div id="showlogin">Log in</div>
+                <div id="showsignup" class="disable">Sign up</div>
+            </div>
+            <h3>Enter credentials</h3> <!-- Use form here and method:post-->
+            <div id="write-name">
+                <label>Name &nbsp&nbsp&nbsp&nbsp</label>
+                <input type="text" id="name" placeholder="Parthik" required/>
+            </div>
+            <div id="write-email">
+                <label>Email id&nbsp</label>
+                <input type="email" id="email" placeholder="parthikdas@gmail.com" required/>
+            </div>
+            <div id="write-password">
+                <label hl>Password</label>
+                <input type="password" id="password" placeholder="Enter password" required/>
+            </div>
+            <div id="write-password2">
+                <label hl>Password</label>
+                <input type="password" id="password2" placeholder="Confirm password" required/>
+            </div>
+            <div class="buttons">
+                <div id="login">Log in</div>
+                <div id="signup">Sign up</div>
+            </div>
+        </div>
+    </div>
+    <div id="showDetails"></div>
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,4 @@
+Here use crudcrud.com to store data and can also host in github pages.
+Here i have used localStorage to store the user details for auto login. If user closes the tab without
+logout then next time with that user data auto login will happen. This feature will work for every
+account except admin account.

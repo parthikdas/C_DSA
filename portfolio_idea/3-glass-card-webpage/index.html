@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head> 
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Glass Doc</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <div class="content">
+                <div id="img1"></div>
+                <h2>01</h2>
+                <h4 style="color: #fff;">Parthik Kumar Das</h4>
+                <p>I am a coding enthusiast exploring different dimensions.<br>I am currently pursuing BTECH in CSE from SRM University,<br>Chennai.</p>
+                <a href="https://www.srmist.edu.in" target="_blank">Learn More</a>
+            </div>
+        </div>
+        <div class="card">
+            <div class="content">
+                <h2>02</h2>
+                <h3>Card Two</h3>
+                <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Rem saepe tempore autem facilis veniam dicta quam soluta, et beatae veritatis officia.</p>
+                <a href="#">Learn More</a>
+            </div>
+        </div>
+        <div class="card">
+            <div class="content">
+                <h2>03</h2>
+                <h3>Card Three</h3>
+                <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Rem saepe tempore autem facilis veniam dicta quam soluta, et beatae veritatis officia .</p>
+                <a href="#">Learn More</a>
+            </div>
+        </div>
+    </div>
+
+    <!--The below js file I downloaded from https://micku7zu.github.io/vanilla-tilt.js/-->
+    <script type="text/javascript" src="vanilla-tilt.js"></script>
+    <script type="text/javascript">
+        VanillaTilt.init(document.querySelectorAll(".card"), {
+		max: 25,
+		speed: 400,
+        glare: true,
+        "max-glare": 1
+	});
+    </script>
+</body>
+</html>

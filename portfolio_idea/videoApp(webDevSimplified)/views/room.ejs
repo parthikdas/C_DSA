@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        const ROOM_ID = "<%= roomId %>" // from here we are gonna get the roomId, this thing works in server
+    </script>
+    <script defer src="https://unpkg.com/peerjs@1.3.1/dist/peerjs.min.js"></script> <!-- defer - so that it loads in correct order from top all the way down to bottom -->
+    <script src="/socket.io/socket.io.js" defer></script> <!-- So that we can use socket.io in frontend -->
+    <!-- Its loading all of socketIo js code into our frontend and it's serving it from our own server -->
+    <script src="script.js" defer></script>
+    <style>
+        #video-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, 300px);
+            grid-auto-rows: 300px;
+            /* It is basically saying all of our rows should be 300 px tall, every cols should be 300px wide */
+        }
+        video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Zooms the video till it fit the square and cut out the edges if needed */
+        }
+    </style>
+</head>
+<body>
+    <div id="video-grid"></div>
+</body>
+</html>
+
+<!-- In the tutorial, when another user leaves the video is gone from others but its not happening here-->

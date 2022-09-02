@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Form</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <form action="">
+        <h1>Payment Form</h1> 
+        <p> <span>required fields are followed by *</span></p>
+        <h2>Contact Information</h2>  
+        <p>Name* : <input type="text" id="name" name="name" placeholder="eg:kittu" required></p> 
+        <fieldset>
+            <legend>Gender*</legend>
+            <p>
+             Male <input type="radio" name="gender" id="male" required>
+             Female <input type="radio" name="gender" id="female" required>
+             Other <input type="radio" name="gender" id="other" required>
+            </p>
+        </fieldset>
+        <p>Address: <textarea name="address" id="address" cols="100" rows="8" placeholder="G.T road gopalpur asansol 4" ></textarea></p>
+        <p>Email* : <input type="email" name="email" id="email" placeholder="parthikdas@gmail.com" required></p>
+        <p>Pincode* : <input type="number" name="pincode" id="pincode" placeholder="713304" required></p>
+        <hr>
+        <h2>Payment Details</h2>
+            <p>
+                Card Type* : 
+                <select name="card_type" id="card_type">
+                    <option value="">--Select a Card Type--</option> <!--we have left the value as nothing so after user select then only value will go i.e. no default-->
+                    <option value="rupay">Rupay</option>
+                    <option value="mastercard">MasterCard/DebitCard</option>
+                    <option value="visa">Visa</option>
+                </select>
+            </p>
+            <p>Card Number* : <input type="number" name="card_number" id="card_number" required></p>
+            <p>Expiry Date* : <input type="date" name="exp_date" id="exp_date" required></p>
+            <p>CVV* : <input type="password" name="cvv" id="cvv" required></p>
+            <input type="submit" value="Pay Now" id="submit" name="submit">
+    </form>
+</body>
+</html>

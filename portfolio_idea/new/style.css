@@ -1,0 +1,32 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body {
+    min-height: 100vh;
+    min-width: 100vw;
+}
+.video-container {
+    height: 90vh;
+    width: inherit;
+}
+#video, #canvas {
+    position: absolute;
+    top: 0;
+}
+#canvas {
+    z-index: 1;
+}
+#container{ /* This and */
+    -webkit-appearance: none;
+    transform: rotateY(180deg);
+}  
+#container video::-webkit-media-controls{ /* This lines gives the mirrored video */
+   transform: rotateY(180deg) !important;
+}
+.controls {
+    height: 10vh;
+    width: inherit;
+    background-color: red;
+}

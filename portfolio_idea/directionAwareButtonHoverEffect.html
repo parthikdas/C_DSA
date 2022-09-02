@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Direction Aware Button Hover</title>
+    <style>
+        *{
+            margin: 0;padding: 0;box-sizing: border-box;
+        }
+        body{
+            margin: 0;height: 100vh;display: flex;justify-content: center;align-items: center;
+        }
+        .box{
+            height: 500px;width: 500px;display: flex;justify-content: center;align-items: center;
+        }
+        .box:hover{
+            box-shadow: 0 0 11px rgba(33, 33, 33, .2); /* shadow effect */
+        }
+        .btn{
+            text-decoration: none;
+            padding: 24px 72px;
+            background-color: #7a4009;
+            color: #fff;
+            border-radius: 100px;
+            font-family: Arial, Helvetica, sans-serif;
+            font-weight: bolder;
+            font-size: 22px;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+        .btn::before{
+            content: "";
+            position: absolute;
+            left: var(--x);
+            top: var(--y);
+            transform: translate(-50%, -50%);
+            background-image: radial-gradient(circle closest-side, #ff7a00, transparent);
+            width: 0; height: 0;
+            transition: width 0.3s ease, height 0.3s ease;
+            z-index: -1;
+        }
+        .btn:hover::before { width: 250px; height: 250px; }
+    </style>
+</head>
+<body>
+    <div class="box">
+        <a href="#" class="btn">Hover on me</a>
+    </div>
+    <script>
+        const btn = document.querySelector(".btn");
+        btn.addEventListener("mousemove", (e) => {
+            const xPos = e.pageX - e.target.offsetLeft;
+            const yPos = e.pageY - e.target.offsetTop;
+
+            e.target.style.setProperty("--x", `${xPos}px`);
+            e.target.style.setProperty("--y", `${yPos}px`);
+        });
+    </script>
+</body>
+</html>

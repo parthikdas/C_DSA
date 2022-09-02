@@ -1,0 +1,96 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body {
+    min-height: 100vh;
+    min-width: 100vw;
+    font-size: 1.4rem;
+}
+.navbar {
+    height: 8vh;
+    width: 100%;
+    background-color: rgb(252, 248, 248);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: .5rem;
+}
+#loginSection {
+    background-color: rgba(255, 240, 240, 0.596);
+    height: 100vh;
+    width: 100vw;
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.box {
+    height: fit-content;
+    width: fit-content;
+    background-color: rgb(175, 192, 245);
+}
+.buttons {
+    display: flex;
+    width: 100%;
+}
+.buttons div {
+    margin-top: 1rem;
+    border-top: .1rem solid black;
+    width: 100%;
+    padding: .8rem;
+}
+h3 {
+    margin: 1rem;
+}
+#signup, #write-name, #write-password2 {
+    display: none;
+}
+#write-name, #write-email, #write-password, #write-password2 {
+    margin: 1rem;
+}
+input {
+    height: 2rem;
+    width: 10rem;
+    font-size: .9rem;
+}
+#login,#signup {
+    text-align: center;
+    cursor: pointer;
+}
+.show-box {
+    display: flex;
+    justify-content: space-between;
+}
+#showlogin, #showsignup {
+    cursor: pointer;
+    padding: 1rem;
+    font-size: 1.6rem;
+    border-bottom: .1rem solid rgb(172, 172, 172);
+    width: 100%;
+    text-align: center;
+}
+#showsignup {
+    border-left: .1rem solid rgb(172, 172, 172);
+}
+.disable {
+    color: grey;
+}
+#showDetails {
+    height: 100vh;
+    width: 100vw;
+    position: absolute;
+    z-index: 0;
+}
+table, td, th {
+    border: 1px solid black;
+    padding: .8rem;
+    margin: 1.2rem;
+    height: fit-content;
+}
+#showDetails {
+    display: flex;
+}

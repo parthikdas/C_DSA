@@ -1,0 +1,1 @@
+Unlike in V2 where we sent all the data from backend to frontend, here we will send the data from frontend to backend and from backend we will only send that user's data not all.

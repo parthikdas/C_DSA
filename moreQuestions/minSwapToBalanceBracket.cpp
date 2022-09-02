@@ -1,5 +1,6 @@
 // Que - min no of swap to balance parenthesis, assuming only () brackets
-// )()( -> 1
+// ---------- Variation 1 - u can swap any index in the string ----------
+// )()( -> 1 // swap 1st and last index 
 #include <iostream>
 using namespace std;
 int main() {
@@ -24,5 +25,20 @@ int main() {
     }
     if(start == end) cout<<start;
     else cout<<"Can't be balanced";
+    return 0;
+}
+
+// ---------- Variation 2 - u can swap only adjacent index in the string ----------
+/*
+    Input  : []][][
+    Output : 2
+    Explanation :
+    First swap: Position 3 and 4
+    [][]][
+    Second swap: Position 5 and 6
+    [][][]
+*/
+int main() {
+    // do it
     return 0;
 }
