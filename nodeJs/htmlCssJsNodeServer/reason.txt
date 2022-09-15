@@ -1,1 +1,0 @@
-This is a working model of how to load html and css and js in node js without using express
