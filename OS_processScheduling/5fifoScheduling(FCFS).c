@@ -14,7 +14,7 @@ int main() {
 	{
 		waiting[i]=waiting[i-1]+bt[i-1];
 		printf("Waiting time for %d process= %d\n",i,waiting[i-1]);
-		avgwt+=waiting[i];
+		avgwt+=waiting[i-1];
 	}
 	for (int i=0;i<n;i++)
 	{

@@ -14,7 +14,7 @@ int main() {
 		process[i]=i+1;
 	}
 	for (int i=0;i<n;i++){
-		for (int j=1+1;j<n;j++){
+		for (int j=i+1;j<n;j++){
 			if (bt[i]>bt[j]){
 			temp=bt[i];
 			bt[i]=bt[j];
@@ -29,7 +29,7 @@ int main() {
 	{
 	waiting[i]=waiting[i-1]+bt[i-1];
 	printf("Waiting time for %d process= %d\n",i,waiting[i-1]);
-	avgwt+=waiting[i];
+	avgwt+=waiting[i-1];
 	}
 	for (int i=0;i<n;i++)
 	{
