@@ -33,11 +33,8 @@ int main() {
 	while(t--) {
 	    int a,b,c;
 	    cin>>a>>b>>c;
-	    int temp = min(b,c);
-	    b-=temp;
-	    c-=temp;
-	    a -= max(b,c);
-	    cout<<(a>0?"YES":"NO")<<endl;
+	   int diff = abs(b-c);
+	   cout<<(a>diff?"YES":"NO")<<endl;
 	}
 	return 0;
 }
