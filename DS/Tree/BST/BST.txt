@@ -38,3 +38,11 @@ The tree will look like this:
      10(2)    20(1)
     /    \       
  9(1)   11(1)   
+
+
+
+ Depth First Traversal -> pre(root, lett, right)
+                         in(left, root, right)
+                         post(left, right, root)
+    
+Breadth First Traversal -> Level order (Non rec) (Queue)

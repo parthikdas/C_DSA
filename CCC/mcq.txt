@@ -115,3 +115,10 @@ switch(*(3 + "I LOVE" "ABCD" + 3)) {
 // Apple Mac
 // 3 + that string is we will reach at 'O' then at last again +3 we will reach at 'A' 
 __________________________________________________________
+int i=1; char c=125;
+do i++;
+while(c++);
+printf("%d",i);
+// 133
+// after c reaches 127 it will again start from -128 and it will go on till 0 so i will be 3(125to127) + 128(-128to1) + 1(0)
+__________________________________________________________

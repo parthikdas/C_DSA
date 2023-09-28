@@ -1,0 +1,94 @@
+DOM 
+
+Write a program to find the string in the 1729th item in the following webpage
+https://quest.squadcast.tech/public/dom.html
+Submission
+Submission URL: https://quest.squadcast.tech/api/RA2011042010027/submit/dom?answer={your_answer}&extension={your_language_extension}
+Make a HTTP POST Request to your submission URL with the code in the request body
+Example
+Let's assume that the string is: f7h5494wa986aeh8vpwn
+So, your Submission URL will be https://quest.squadcast.tech/api/RA2011042010027/submit/dom?answer=f7h5494wa986aeh8vpwn&extension=py
+
+
+const request = require('request');
+const options = {
+    url: 'https://quest.squadcast.tech/public/dom.html',
+    method: 'GET',
+    headers: {
+        'Content-Type': 'text/html'
+    }
+};
+request(options, (error, response, body) => {
+    if (!error && response.statusCode === 200) {
+        const itemList = body.split('\n');
+        const stringToFind = itemList[25+3457]; // initial lines + we want*2 as , are in between
+        const start = stringToFind.indexOf('">') +2, end = stringToFind.indexOf('</div>')
+        console.log(stringToFind.substring(start, end))
+    } else {
+        console.error(error);
+    }
+});
+
+//*2 was done as div were there as well as an empty line then another div
+---------------------------------------------------------------------------------------------------------
+DNS
+solved
+Get the TXT DNS Record for the URL quest.squadcast.tech and write a regex to extract the IPv4 address embedded in the TXT record
+Submission
+Submission URL: https://quest.squadcast.tech/api/RA2011042010027/submit/dns?answer={your_answer}&extension={your_language_extension}
+Make a HTTP POST Request to your submission URL with the code in the request body
+Example
+Let's assume that the IPv4 address in the TXT record is: 45.178.56.211
+So, your Submission URL will be https://quest.squadcast.tech/api/RA2011042010027/submit/dns?answer=45.178.56.211&extension=py
+
+
+
+const dns = require('dns');
+const url = 'quest.squadcast.tech';
+dns.resolveTxt(url, (err, records) => {
+  if (err) {
+    console.error(err);
+    return;
+  }
+  const txtRecord = records[0][0]; // lets say only one text record
+  const regex = /ip6:([a-fA-F0-9:]+)/;
+  const match = txtRecord.match(regex);
+  if (match && match[1]) {
+    const ipv6Address = match[1];
+    console.log(ipv6Address);
+  } else {
+    console.log('No IPv4 address found');
+  }
+});
+
+
+---------------------------------------------------------------------------------------------------------
+DNS
+solved
+Get the TXT DNS Record for the URL quest.squadcast.tech and write a regex to extract the IPv4 address embedded in the TXT record
+Submission
+Submission URL: https://quest.squadcast.tech/api/RA2011042010027/submit/dns?answer={your_answer}&extension={your_language_extension}
+Make a HTTP POST Request to your submission URL with the code in the request body
+Example
+Let's assume that the IPv4 address in the TXT record is: 45.178.56.211
+So, your Submission URL will be https://quest.squadcast.tech/api/RA2011042010027/submit/dns?answer=45.178.56.211&extension=py
+
+
+
+const dns = require('dns');
+const url = 'quest.squadcast.tech';
+dns.resolveTxt(url, (err, records) => {
+  if (err) {
+    console.error(err);
+    return;
+  }
+  const txtRecord = records[0][0]; // lets say only one text record
+  const regex = /ip6:([a-fA-F0-9:]+)/;
+  const match = txtRecord.match(regex);
+  if (match && match[1]) {
+    const ipv6Address = match[1];
+    console.log(ipv6Address);
+  } else {
+    console.log('No IPv4 address found');
+  }
+});
