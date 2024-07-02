@@ -11,6 +11,10 @@ void fibo(int n, int a, int b){
 		cout << a << " ";
 	}
 }
+int fibNthTerm(int n){
+    if(n<=1) return n;
+    return fibNthTerm(n-1)+fibNthTerm(n-2);
+}
 int main(){
 	int N = 10;
 	fibo(N, 0, 1);

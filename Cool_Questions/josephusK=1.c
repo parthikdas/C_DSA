@@ -27,6 +27,16 @@ int decimalTObinary(int num) {
     }
     return x;
 }
+// third method using bits
+int decToBinary(int n) {
+    int s = 0,j=1;
+    while(n>0) {
+        s = (n&1)*j+s; // &1 gives the least significant bit and >>1 is /2
+        n=n>>1;
+        j*=10;
+    }
+    return s;
+}
 int binaryTOdecimal(int n){
     int dec,i=0;
     while(n!=0) {
