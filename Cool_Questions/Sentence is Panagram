@@ -1,4 +1,4 @@
-Sentence is Panagram(means all char a-z is preset):-
+// Sentence is Panagram(means all char a-z is preset):-
 
 bool checkIfPangram(char * s){//ascii of a-z is 97-122 so i am using that
     //int a[123]={0};

@@ -21,8 +21,7 @@ the digts are defined as one or more digits.
 
 input : "0" => true , "e" => false , "." => false
  */
-package Cool_Questions;
-
+package specifics.String;
 public class validNumber {
     // slow only beats 8% people
         public boolean isNumber (String s) {
