@@ -1,0 +1,7 @@
+for competitive programming normal for loop is faster.
+If we used streams its slower than normal for loop.
+
+2 pointer is for sorted arrays
+
+Slow and Fast pointer to find or delete nth stuff or to detecr cycle. the algo is called as tortoise and hare
+algo or floyd's cyle finding algo.
