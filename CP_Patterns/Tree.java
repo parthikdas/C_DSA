@@ -1,5 +1,7 @@
 package CP_Patterns;
 
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.Stack;
 
 public class Tree {
@@ -106,5 +108,30 @@ public class Tree {
         void pushLeft(TreeNode node) { while (node != null) { stack.push(node); node = node.left; } }
         int next() { TreeNode node = stack.pop(); pushLeft(node.right); return node.val; }
         boolean hasNext() { return !stack.isEmpty(); }
+    }
+    // Level Order Traversal (BFS)
+    static void levelOrder(TreeNode root) {
+        if (root == null) return;
+        Queue<TreeNode> q = new LinkedList<>();
+        q.add(root);
+        while (!q.isEmpty()) {
+            TreeNode node = q.poll();
+            System.out.print(node.val + " ");
+            if (node.left != null) q.add(node.left);
+            if (node.right != null) q.add(node.right);
+        }
+    }
+
+    // Count Leaf Nodes
+    static int countLeaves(TreeNode root) {
+        if (root == null) return 0;
+        if (root.left == null && root.right == null) return 1;
+        return countLeaves(root.left) + countLeaves(root.right);
+    }
+
+    // Find Height of BST
+    static int findHeight(TreeNode root) {
+        if (root == null) return 0;
+        return 1 + Math.max(findHeight(root.left), findHeight(root.right));
     }
 }
