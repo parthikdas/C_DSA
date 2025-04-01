@@ -1,5 +1,8 @@
 package CP_Patterns.stack;
 
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Stack;
 
 public class next {
@@ -31,6 +34,30 @@ public class next {
         }
         return result;
     }
+
+    // 496. Next Greater Element I
+    public int[] nextGreaterElement(int[] nums1, int[] nums2) {
+    Map<Integer, Integer> map = new HashMap<>();
+    Stack<Integer> monoStack = new Stack<Integer>();
+    int[] result = new int[nums1.length];
+
+    // Step 1: Process nums2 to find the next greater element for each value in nums2
+    for (int num : nums2) {
+        // While there's an element in the stack and it's less than the current element in nums2
+        while (!monoStack.isEmpty() && num > monoStack.peek()) {
+            int var = monoStack.pop();
+            map.put(var, num);  // Record the next greater element for var
+        }
+        monoStack.push(num);  // Push current number onto the stack
+    }
+
+    // Step 2: Fill the result array by looking up the next greater element from the map for each element in nums1
+    for (int i = 0; i < nums1.length; i++) {
+        result[i] = map.getOrDefault(nums1[i], -1);  // Default to -1 if there's no next greater element
+    }
+
+    return result;
+}
 
     public int largestRectangleArea(int[] heights) {// O(n),O(n)
         Stack<Integer> stack = new Stack<>();
