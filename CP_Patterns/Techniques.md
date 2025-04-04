@@ -1,4 +1,4 @@
-Sliding Window :
+# Sliding Window :
 - When its the first iteration i.e. the window is not created, then loop and create it, but for the rest of the elements, start++ and add the new ele so we are sliding not creating a new window. Eg: 567 leetcode
 
 - Using hashtable instead of hashSet is faster
@@ -25,8 +25,21 @@ Sliding Window :
             temp2 = temp2.next;
         }
     }
-
+# Merging sorted things
 - Merge k things just put in pq or do merge sort
+
 # Anagram stuffs:
 - Number of words that can be generated from a word = ! no of distinct chars in it.
 - Anagram: n! / !freqOfEachChar   Eg: aabc -> 4! / 2!1!1! -> 12     abc -> 3! / 1!1!1! -> 6
+
+# New 3 nested loops style O(n^3)
+    for (int i = 0; i < nums.length; i++) {
+        for (int k = nums.length - 1; k > i; k--) {
+            int j = i + 1;
+            while (j < k) {
+                // Do whatever u want
+                j++;
+            }
+        }
+    }
+        
