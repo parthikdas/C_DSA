@@ -1,5 +1,11 @@
 package CP_Patterns.BST;
 import java.util.*;
+/*
+    # BST patterns:
+    - bfs, dfs traversal
+    - Lca pattern (depth tracking dfs)
+    - path pattern (backtracking)
+ */
 // Note: Inorder of BST gives a sorted array
 /*
         5
@@ -10,51 +16,64 @@ import java.util.*;
  */
 /*
     Insert
-    PreOrder, InOrder, PostOrder, LevelOrder, zigzagLevelOrder, DFS, BFS
     Search
-    height - Longest path from the node to a leaf
-    depth -  Number of edges from the root to the node
     98. validBST
-    Leaf Similar Trees - the leaves of 2 trees are same
-    Print leaf
-    Print leaf in alt order - 1st, nth, 2nd, (n-1)th, 3rd,........
+    450. deleteNode bst
+    Traversal:
+        PreOrder, InOrder, PostOrder, LevelOrder, zigzagLevelOrder, DFS, BFS
+    Height:
+        height - Longest path from the node to a leaf
+        110. Balanced Binary Tree
+    Depth:
+        depth -  Number of edges from the root to the node
+        111. Minimum Depth of Binary Tree
+        104. Maximum Depth of Binary Tree
+    Leaf:
+        Leaf Similar Trees - the leaves of 2 trees are same
+        Print leaf
+        Print leaf in alt order - 1st, nth, 2nd, (n-1)th, 3rd,........
+        404. Sum of left leaves
+        129. Sum Root to Leaf Numbers - amazon asked - root to all leafs path no sum
+    Construction:
+        1008. Construct Binary Search Tree from Preorder Traversal (DFS to BST)
+        108. Convert Sorted Array to Binary Search Tree (inOrder to BST)
+    View:
+        Top view - level order, dfs
+        Left view - level order, dfs
+        Right view - level order, dfs
     226. Invert Tree - swapping of left and right children
     101. Symmetric Tree - left side is mirror of right
     938. Range Sum of BST - sum of all nodes b/w a range
-    1008. Construct Binary Search Tree from Preorder Traversal (DFS to BST)
-    108. Convert Sorted Array to Binary Search Tree (inOrder to BST)
-    404. Sum of left leaves
     222. Count Complete Tree Nodes - count nodes
     112. Path Sum - path to target sum
-    129. Sum Root to Leaf Numbers - amazon asked - root to all leafs path no sum
     230. kthSmallest bst
     2583. Kth Largest Sum in a Binary Tree
     2415. Reverse Odd Levels of Binary Tree
     783. Minimum Distance Between BST Nodes
     1305. All Elements in Two Binary Search Trees
-    257. Binary Tree Paths
+    LCA:
+        235. Lowest Common Ancestor of a Binary Search Tree <- 235, 236, 865, 1123 same logic
+        236. Lowest Common Ancestor of a Binary Tree
+        865. Smallest Subtree with all the Deepest Nodes, 1123. Lowest Common Ancestor of Deepest Leaves <- same solution (depth track dfs)
+    BackTrack:
+        257. Binary Tree Paths - 988 same logic same backtrack
+        988. Smallest String Starting From Leaf - backtrack
+    
 
-    2096. Step-By-Step Directions From a Binary Tree Node to Another
+    1382. Balance a Binary Search Tree
     minDistBetweenNodes
-    pathToNode
-    deleteNode
-    balanceTree
-    LCA
-    1123. Lowest Common Ancestor of Deepest Leaves
-    minSum
-    988. Smallest String Starting From Leaf
-    1130. Minimum Cost Tree From Leaf Values
     1038. Binary Search Tree to Greater Sum Tree
     99. Recover Binary Search Tree
-    971. Flip Binary Tree To Match Preorder Traversal
-    951. Flip Equivalent Binary Trees
-    105. Construct Binary Tree from Preorder and Inorder Traversal
     1161. Maximum Level Sum of a Binary Tree
-    222. Count Complete Tree Nodes
-    863. All Nodes Distance K in Binary Tree
-    124. Binary Tree Maximum Path Sum - hard
-    2867. Count Valid Paths in a Tree - hard
-    113. Path Sum II
+    2096. Step-By-Step Directions From a Binary Tree Node to Another - backtrack
+    971. Flip Binary Tree To Match Preorder Traversal - backtrack
+    951. Flip Equivalent Binary Trees - backtrack
+    105. Construct Binary Tree from Preorder and Inorder Traversal - backtrack
+    863. All Nodes Distance K in Binary Tree - backtrack
+    1130. Minimum Cost Tree From Leaf Values - Dp
+    124. Binary Tree Maximum Path Sum - hard - Dp
+    2867. Count Valid Paths in a Tree - hard - Dp
+    113. Path Sum II - Dp, backtrack
 */
 class TreeNode {
     int val;
@@ -70,6 +89,46 @@ public class AllQue {
         else root.right = insert(root.right, val);
         return root;
     }
+    //---------------------------------------------------------------------------------------
+    public static boolean search(TreeNode root, int val) {
+        if(root == null) return false;
+        if(root.val > val) return search(root.left, val);
+        if(root.val < val) return search(root.right, val);
+        return true;
+    }
+    //---------------------------------------------------------------------------------------
+    public static boolean validBST(TreeNode root, int min, int max) {
+        if(root == null) return true; // Base case: an empty tree is a valid BST
+        if(root.val < min || root.val > max) return false; // if out of range
+        return validBST(root.left, min, root.val) && validBST(root.right, root.val, max);
+    }
+    //---------------------------------------------------------------------------------------
+    public TreeNode deleteNode(TreeNode root, int key) {
+        if(root == null) return null;
+        if(root.val == key ) {
+            // Case 1: Node is a leaf
+            if (root.left == null && root.right == null) {
+                return null; // returning null will make the pointer as null of the parent node
+            }
+            // Case 2: Node has one child
+            if (root.left == null) return root.right;
+            if (root.right == null) return root.left;
+            // Case 3: Node has two children
+            // Find the in-order successor (smallest in the right subtree)
+            TreeNode successor = findMin(root.right);
+            root.val = successor.val;  // Copy the successor's value
+            root.right = deleteNode(root.right, successor.val);  // Delete the successor
+        } else if(root.val > key ) root.left = deleteNode(root.left, key);
+        else root.right = deleteNode(root.right, key);
+        return root;
+    }
+    // Helper method to find the minimum node in a BST
+    private TreeNode findMin(TreeNode node) {
+        while (node.left != null) node = node.left;
+        return node;
+    }
+    //---------------------------------------------------------------------------------------
+    // TRAVERSAL
     //---------------------------------------------------------------------------------------
     public static void preOrder(TreeNode root) { // 5 3 1 4 7 6 8 - DFS - O(n)
         if(root == null) return;
@@ -159,17 +218,40 @@ public class AllQue {
         }
     }
     //---------------------------------------------------------------------------------------
-    public static boolean search(TreeNode root, int val) {
-        if(root == null) return false;
-        if(root.val > val) return search(root.left, val);
-        if(root.val < val) return search(root.right, val);
-        return true;
-    }
+    // HEIGHT
     //---------------------------------------------------------------------------------------
     public static int height(TreeNode root) {
         if(root == null) return 0;
         return Math.max(height(root.left), height(root.right)) + 1;
     }
+    //---------------------------------------------------------------------------------------
+    public int checkHeight(TreeNode root) { // without using variable
+        if (root == null) return 0; // Base case: null node has height 0
+        int leftHeight = checkHeight(root.left);
+        int rightHeight = checkHeight(root.right);
+        // If either subtree is unbalanced, propagate -1
+        if (leftHeight == -1 || rightHeight == -1 || Math.abs(leftHeight - rightHeight) > 1) {
+            return -1;
+        }
+        // Return the height of the current node
+        return 1 + Math.max(leftHeight, rightHeight);
+    }
+    public int Tree_height(TreeNode root){ // with using variable
+        if(root == null) return 0; 
+        int left_height = Tree_height(root.left);
+        if(left_height == -1) return -1;
+        int right_height = Tree_height(root.right);
+        if(right_height == -1) return -1;
+        int ans = 0;
+        if(Math.abs(left_height - right_height)>1) ans = -1;
+        else ans = 1 + Math.max(left_height,right_height);
+        return ans;
+    }
+    public boolean isBalanced(TreeNode root) {
+        return checkHeight(root) != -1;
+    }
+    //---------------------------------------------------------------------------------------
+    // DEPTH
     //---------------------------------------------------------------------------------------
     public static int depth(TreeNode root, int val, int c) {
         if(root == null) return 0;
@@ -178,11 +260,37 @@ public class AllQue {
         else return depth(root.right, val, c+1);
     }
     //---------------------------------------------------------------------------------------
-    public static boolean validBST(TreeNode root, int min, int max) {
-        if(root == null) return true; // Base case: an empty tree is a valid BST
-        if(root.val < min || root.val > max) return false; // if out of range
-        return validBST(root.left, min, root.val) && validBST(root.right, root.val, max);
+    public int minDepth(TreeNode root) {
+        if(root == null) return 0;
+        if(root.left == null && root.right==null) return 1;
+        int ans = Integer.MAX_VALUE;
+        if(root.left !=null) ans = Math.min(ans, 1+minDepth(root.left));
+        if(root.right !=null) ans = Math.min(ans, 1+minDepth(root.right));
+        return ans;
     }
+    public int minDepth1(TreeNode root) {
+        if (root == null) return 0;  // Corrected: return 0 for null nodes
+        // If either left or right child is null, only consider the other subtree
+        if (root.left == null) return 1 + minDepth(root.right);
+        if (root.right == null) return 1 + minDepth(root.left);
+        // For both children present, take the minimum depth
+        return 1 + Math.min(minDepth(root.left), minDepth(root.right));
+    }
+    //---------------------------------------------------------------------------------------
+    public int maxDepth(TreeNode root) {
+        if (root == null) return 0;  // Base case: height of an empty tree is 0
+        return 1 + Math.max(maxDepth(root.left), maxDepth(root.right));  // Max height formula
+    }
+    public int maxDepth1(TreeNode root) {
+        if(root == null) return 0;
+        if(root.left == null && root.right==null) return 1;
+        int ans = Integer.MIN_VALUE;
+        if(root.left !=null) ans = Math.max(ans, 1+maxDepth(root.left));
+        if(root.right !=null) ans = Math.max(ans, 1+maxDepth(root.right));
+        return ans;
+    }
+    //---------------------------------------------------------------------------------------
+    // LEAF
     //---------------------------------------------------------------------------------------
     private void collectLeaves(TreeNode root, List<Integer> leaves) {
         if (root == null) return;        
@@ -193,7 +301,6 @@ public class AllQue {
         collectLeaves(root.left, leaves);
         collectLeaves(root.right, leaves);
     }
-    //---------------------------------------------------------------------------------------
     public boolean leafSimilar(TreeNode root1, TreeNode root2) {
         List<Integer> leaves1 = new ArrayList<>();
         List<Integer> leaves2 = new ArrayList<>();
@@ -222,6 +329,112 @@ public class AllQue {
             if(cur.left == null && cur.right == null) l.add(cur.val);
         }
         for(int i = 0; i < l.size()/2;i++) System.out.print(l.get(i) + " " + l.get(l.size()-i-1) + " ");
+    }
+    //---------------------------------------------------------------------------------------
+    public static int sumOfLeftLeaves(TreeNode r) { // using inorder u can use any
+        if (r == null) return 0;
+        int sum = 0;
+        sum += sumOfLeftLeaves(r.left);
+        if(r.left != null && r.left.left == null && r.left.right == null) {
+            sum+=r.left.val;
+        }
+        sum += sumOfLeftLeaves(r.right);
+        return sum;
+    }
+    //---------------------------------------------------------------------------------------
+    public static int sumabc(TreeNode root,int currentSum){
+        if (root==null) return 0;
+        currentSum = currentSum * 10 + root.val;
+        if (root.left==null && root.right==null) return currentSum;
+        return sumabc(root.left,currentSum) + sumabc(root.right,currentSum);
+    }
+    //---------------------------------------------------------------------------------------
+    // CONSTRUCTION
+    //---------------------------------------------------------------------------------------
+    public TreeNode bstFromPreorder(int[] preorder) {
+        TreeNode root = null;
+        for(int n: preorder) root = insert(root, n);
+        return root;
+    }
+    //---------------------------------------------------------------------------------------
+    public TreeNode bstFromInorder(int a[], int l, int r) { // using binary search to get to the middle, as in inorder root is in middle always
+        if(l > r) return null;
+        int mid = l + (r-l) / 2;
+        TreeNode node = new TreeNode(a[mid]);
+        node.left = bstFromInorder(a,l,mid-1);
+        node.right = bstFromInorder(a,mid+1,r);
+        return node;
+    }
+    //---------------------------------------------------------------------------------------
+    // VIEW
+    //---------------------------------------------------------------------------------------
+    public static void topView_LevelOrder(TreeNode r){
+        if(r == null) return;
+        Queue<TreeNode> q = new LinkedList<>();
+        q.add(r);
+        while (!q.isEmpty()) {
+            int l = q.size();
+            for(int i = 0; i < l; i++) {
+                TreeNode cur = q.poll();
+                System.out.print(cur.val + " ");
+                if(i == 0 && cur.right != null) q.add(cur.right); // q takes opp
+                if(i == l-1 && cur.left != null) q.add(cur.left);
+            }
+        }
+    } 
+    public static void topView_dfs(TreeNode r, int l){
+        if(r == null) return;
+        if(l == 0 || l == 1)  topView_dfs(r.left, 1);
+        System.out.print(r.val + " ");
+        if(l == 0 || l == 2)  topView_dfs(r.right, 2);
+    }
+
+    public static void leftView_LevelOrder(TreeNode r){
+        if(r == null) return;
+        Queue<TreeNode> q = new LinkedList<>();
+        q.add(r);
+        while (!q.isEmpty()) {
+            int l = q.size();
+            for(int i = 0; i < l; i++) {
+                TreeNode cur = q.poll();
+                if(i == 0) System.out.print(cur.val + " ");
+                if(cur.right != null) q.add(cur.right); // q takes opp
+                if(cur.left != null) q.add(cur.left);
+            }
+        }
+    }
+    public static void leftView_dfs(TreeNode r, int level, int[] highestLevel){ // Even though highestLevel is updated, its value doesn’t persist in the recursive calls because primitives in Java are passed by value. so array
+        if(r == null) return;
+        if(level > highestLevel[0]) {
+            highestLevel[0] = level;
+            System.out.print(r.val + " ");
+        }
+        leftView_dfs(r.right, level+1, highestLevel);
+        leftView_dfs(r.left, level+1, highestLevel);
+    }
+
+    public static void rightView_LevelOrder(TreeNode r){
+        if(r == null) return;
+        Queue<TreeNode> q = new LinkedList<>();
+        q.add(r);
+        while (!q.isEmpty()) {
+            int l = q.size();
+            for(int i = 0; i < l; i++) {
+                TreeNode cur = q.poll();
+                if(i == l-1) System.out.print(cur.val + " ");
+                if(cur.right != null) q.add(cur.right); // q takes opp
+                if(cur.left != null) q.add(cur.left);
+            }
+        }
+    }
+    public static void rightView_dfs(TreeNode r, int level, int[] highestLevel){
+        if(r == null) return;
+        if(level > highestLevel[0]) {
+            highestLevel[0] = level;
+            System.out.print(r.val + " ");
+        }
+        rightView_dfs(r.left, level+1, highestLevel);
+        rightView_dfs(r.right, level+1, highestLevel);
     }
     //---------------------------------------------------------------------------------------
     public static TreeNode invertTree(TreeNode root) { // 8 7 6 5 4 3 1
@@ -263,32 +476,6 @@ public class AllQue {
         return sum; // Return the accumulated sum
     }
     //---------------------------------------------------------------------------------------
-    public TreeNode bstFromPreorder(int[] preorder) {
-        TreeNode root = null;
-        for(int n: preorder) root = insert(root, n);
-        return root;
-    }
-    //---------------------------------------------------------------------------------------
-    public TreeNode bstFromInorder(int a[], int l, int r) { // using binary search to get to the middle, as in inorder root is in middle always
-        if(l > r) return null;
-        int mid = l + (r-l) / 2;
-        TreeNode node = new TreeNode(a[mid]);
-        node.left = bstFromInorder(a,l,mid-1);
-        node.right = bstFromInorder(a,mid+1,r);
-        return node;
-    }
-    //---------------------------------------------------------------------------------------
-    public static int sumOfLeftLeaves(TreeNode r) { // using inorder u can use any
-        if (r == null) return 0;
-        int sum = 0;
-        sum += sumOfLeftLeaves(r.left);
-        if(r.left != null && r.left.left == null && r.left.right == null) {
-            sum+=r.left.val;
-        }
-        sum += sumOfLeftLeaves(r.right);
-        return sum;
-    }
-    //---------------------------------------------------------------------------------------
     public int countNodes(TreeNode root) {
         if(root==null) return 0;
         if(root.left == null && root.right == null) return 1;
@@ -299,13 +486,6 @@ public class AllQue {
         if(root == null) return false;
         if(root.left == null && root.right == null) return root.val == targetSum; // Check only if its a leaf
         return hasPathSum(root.left,targetSum - root.val) || hasPathSum(root.right, targetSum-root.val);
-    }
-    //---------------------------------------------------------------------------------------
-    public static int sumabc(TreeNode root,int currentSum){
-        if (root==null) return 0;
-        currentSum = currentSum * 10 + root.val;
-        if (root.left==null && root.right==null) return currentSum;
-        return sumabc(root.left,currentSum) + sumabc(root.right,currentSum);
     }
     //---------------------------------------------------------------------------------------
     public int kthSmallest(TreeNode root, int k) {
@@ -424,7 +604,57 @@ public class AllQue {
         inOrder(root2, ans);
         Collections.sort(ans);
         return ans;
+    }    
+    //---------------------------------------------------------------------------------------
+    // LCA PROBLEMS
+    //---------------------------------------------------------------------------------------
+    public static TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+        if (root == null) return null; // If the root is null, return null
+        // If both p and q are smaller than root, LCA must be in the left subtree
+        if (p.val < root.val && q.val < root.val) return lowestCommonAncestor(root.left, p, q);
+        // If both p and q are greater than root, LCA must be in the right subtree
+        if (p.val > root.val && q.val > root.val) return lowestCommonAncestor(root.right, p, q);
+        // If p and q are on opposite sides, or one of them is the root, return the root
+        return root;
     }
+    public TreeNode lowestCommonAncestor1(TreeNode root, TreeNode p, TreeNode q) { //  in below format
+        if (root == null || root == p || root == q) return root;
+        TreeNode left = lowestCommonAncestor(root.left, p, q);
+        TreeNode right = lowestCommonAncestor(root.right, p, q);
+        if (left == null) return right;
+        if (right == null) return left;
+        return root;
+    }
+    //---------------------------------------------------------------------------------------
+    public TreeNode lowestCommonAncestorBT(TreeNode root, TreeNode p, TreeNode q) { // O(n), O(h) - recursion stack height
+        if(root == null || root == p || root == q) return root;
+        TreeNode left = lowestCommonAncestorBT(root.left, p, q);
+        TreeNode right = lowestCommonAncestorBT(root.right, p, q);
+        if(left == null) return right; // That means p and q are not found in the left subtree, so return right
+        if(right == null) return left;
+        return root; // It means p and q are split across left and right → So the current node (root) is their Lowest Common Ancestor. Imagine for 1st node i.e. root
+    }
+    //---------------------------------------------------------------------------------------
+    public int maxDepth2(TreeNode root) {
+        if (root == null) return 0;
+        return 1 + Math.max(maxDepth(root.left), maxDepth(root.right));
+    }
+    // Depth aware dfs
+    private TreeNode dfs(TreeNode root, int level, int maxDepth) { // This logic is used in LCA problems, Tree Dp
+        if (root == null) return null;
+        if (level == maxDepth) return root;
+        TreeNode left = dfs(root.left, level + 1, maxDepth);
+        TreeNode right = dfs(root.right, level + 1, maxDepth);
+        if(left == null) return right;
+        if(right == null) return left;
+        return root; // if both left right contains subtrees at lowest level this is the one
+    }
+    public TreeNode subtreeWithAllDeepest(TreeNode root) {
+        int maxDepth = maxDepth2(root); // get the max height
+        return dfs(root, 1, maxDepth);
+    }
+    //---------------------------------------------------------------------------------------
+    // BACKTRACK PROBLEMS
     //---------------------------------------------------------------------------------------
     public List<String> binaryTreePaths(TreeNode root) {
         List<String> output = new ArrayList();
@@ -442,6 +672,43 @@ public class AllQue {
             buildBinaryTreePaths(root.right, sb, output);
         }
         sb.setLength(length);  // Once you've finished exploring a child (or both children), you reset the StringBuilder back to its previous length to backtrack and avoid affecting the path for the next sibling node or the parent node.
+    }
+    //---------------------------------------------------------------------------------------
+    public String smallestFromLeaf(TreeNode root) {
+        StringBuilder smallest = new StringBuilder();
+        dfs(root, new StringBuilder(), smallest);
+        return smallest.toString();
+    }
+    /*
+     example of beloe logic:
+        Start at 'a' → path = "a"
+        Go left to 'b' → path = "ab"
+        'b' is a leaf → reverse: "ba", check if it's smallest
+        Backtrack: remove 'b' → path = "a" ✅
+        Go right to 'c' → path = "ac"
+        'c' is a leaf → reverse: "ca", check
+        Backtrack: remove 'c' → path = "a"
+
+        without backtrack line : abac keep on adding
+     */
+    private void dfs(TreeNode node, StringBuilder path, StringBuilder smallest) { // O(N²), O(H) 
+        if (node == null) return;
+        // Append current node's character to the path
+        path.append((char)('a' + node.val));
+        // If it's a leaf node, compare and update smallest
+        if (node.left == null && node.right == null) {
+            String currentString = path.reverse().toString(); // Reverses the path to get leaf-to-root direction.
+            if (smallest.length() == 0 || currentString.compareTo(smallest.toString()) < 0) { // Compares the reversed string with smallest
+                smallest.setLength(0); // clearing the old value so next line set the new value
+                smallest.append(currentString); // If it's smaller, replaces the current smallest with this new one.
+            }
+            path.reverse(); // backtrack by reversing again
+        }
+        // Recursively traverse left and right subtrees
+        dfs(node.left, path, smallest);
+        dfs(node.right, path, smallest);
+        // Backtrack: remove the current node's character from the path
+        path.setLength(path.length() - 1); // After traversing both children, removes the last character from path (backtracking).
     }
     public static void main(String[] args) {
         TreeNode root = null;
@@ -471,5 +738,53 @@ public class AllQue {
         System.out.println("Range sum between 4 and 6 : "+ rangeSum(root, 4, 7));
         System.out.println("Sum of left leaves : " + sumOfLeftLeaves(root));
         System.out.println("Sum of all path to leaf : " + sumabc(root, 0));
+        System.out.println("Top View Level Order : ");
+        topView_LevelOrder(root);
+        System.out.println();
+        System.out.println("Top View DFS :");
+        topView_dfs(root, 0);
+        System.out.println();
+        System.out.println("Left View Level Order : ");
+        leftView_LevelOrder(root);
+        System.out.println();
+        System.out.println("Left View DFS : ");
+        leftView_dfs(root,0, new int[]{-1});
+        System.out.println();
+        System.out.println("Right View Level Order : ");
+        rightView_LevelOrder(root);
+        System.out.println();
+        System.out.println("Right View DFS : ");
+        rightView_dfs(root,0, new int[]{-1});
     }
 }
+/*
+ Categories divided by chatgpt of the above list:
+ 1. Basic Traversals and Search Algorithms
+PreOrder, InOrder, PostOrder, LevelOrder – These are foundational for understanding tree traversal. Make sure you can implement them recursively and iteratively.
+DFS, BFS – Crucial for graph/tree exploration. Ensure you know how to apply these on trees and understand the time complexities.
+Search – A solid understanding of searching for elements in trees is fundamental (like binary search trees).
+2. Tree Properties
+Height – Longest path from a node to a leaf is useful for problems like Balance Tree or Diameter of Binary Tree.
+Depth – Number of edges from the root to the node; understanding this is important for LCA (Lowest Common Ancestor), Path Sum problems, and so on.
+3. Special Tree Problems
+Valid BST (98), Symmetric Tree (101), Invert Tree (226), Leaf Similar Trees, Range Sum of BST (938) – All of these are common problems that test your understanding of tree properties, like BST properties and symmetric structures.
+Construct BST from Traversals (1008, 105) – These help you understand how to reconstruct trees from given traversals.
+Sum of Left Leaves (404), Path Sum (112), Count Complete Tree Nodes (222) – These deal with path calculations and tree structure manipulations, both of which are frequently tested.
+4. Advanced Concepts
+Lowest Common Ancestor (LCA) – A key problem for understanding tree relationships. It’s essential to grasp its concept thoroughly, as questions about LCA are often asked at FAANG interviews.
+Kth Smallest, Kth Largest Sum in Binary Tree (230, 2583) – These are important for understanding how to navigate binary trees efficiently (often with DFS or BST-specific algorithms).
+Binary Tree Maximum Path Sum (124) – This is a very hard and important problem for tackling deep dynamic programming on trees.
+5. Leaf and Path Operations
+Print leaf in alt order, Print leaf, Binary Tree Paths – These test your ability to manage nodes at different levels and across paths.
+Smallest String Starting From Leaf (988) – A good problem for working with strings in tree structures.
+6. Dynamic and Optimized Approaches
+Recover Binary Search Tree (99) – A classic problem on detecting and recovering from mistakes in BST properties.
+Balance Tree – Understanding tree balance, including rotations (AVL or Red-Black Trees), is important for optimization problems.
+Flip Equivalent Binary Trees (951) – A problem testing tree symmetry and recursive tree transformations.
+7. Other Miscellaneous Problems
+Reverse Odd Levels of Binary Tree (2583), All Nodes Distance K in Binary Tree (863), Step-By-Step Directions From a Binary Tree Node to Another (2096) – These problems test your ability to traverse the tree in creative ways, such as using BFS/DFS for distances or transformations.
+Path Sum II (113) – It involves path construction and dynamic recursion.
+Areas to Strengthen:
+Dynamic Programming on Trees – Problems like Binary Tree Maximum Path Sum (124), Count Valid Paths in a Tree (2867), and Minimum Cost Tree From Leaf Values (1130) require dynamic programming techniques.
+Complex Tree Structures – Some problems like Flip Binary Tree To Match Preorder Traversal (971), Symmetric Tree (101), and Smallest String Starting From Leaf (988) require in-depth knowledge of manipulating tree structures.
+ */
