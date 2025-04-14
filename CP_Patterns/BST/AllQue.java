@@ -2,8 +2,8 @@ package CP_Patterns.BST;
 import java.util.*;
 /*
     # BST patterns:
-    - bfs, dfs traversal
-    - Lca pattern (depth tracking dfs)
+    - bfs, dfs , level order traversal, depth tracking dfs
+    - Lca pattern 
     - path pattern (backtracking)
  */
 // Note: Inorder of BST gives a sorted array
@@ -20,7 +20,11 @@ import java.util.*;
     98. validBST
     450. deleteNode bst
     Traversal:
-        PreOrder, InOrder, PostOrder, LevelOrder, zigzagLevelOrder, DFS, BFS
+        PreOrder, InOrder, PostOrder, LevelOrder, levelOrder_dfs, zigzagLevelOrder, DFS, BFS
+        1161. Maximum Level Sum of a Binary Tree
+        99. Recover Binary Search Tree
+        783. Minimum Distance Between BST Nodes
+        1038. Binary Search Tree to Greater Sum Tree, 538. Convert BST to Greater Tree <- same sol (reverse inorder)
     Height:
         height - Longest path from the node to a leaf
         110. Balanced Binary Tree
@@ -37,6 +41,7 @@ import java.util.*;
     Construction:
         1008. Construct Binary Search Tree from Preorder Traversal (DFS to BST)
         108. Convert Sorted Array to Binary Search Tree (inOrder to BST)
+        1382. Balance a Binary Search Tree
     View:
         Top view - level order, dfs
         Left view - level order, dfs
@@ -58,14 +63,9 @@ import java.util.*;
     BackTrack:
         257. Binary Tree Paths - 988 same logic same backtrack
         988. Smallest String Starting From Leaf - backtrack
-    
+    LCA + BackTrack:
+        2096. Step-By-Step Directions From a Binary Tree Node to Another
 
-    1382. Balance a Binary Search Tree
-    minDistBetweenNodes
-    1038. Binary Search Tree to Greater Sum Tree
-    99. Recover Binary Search Tree
-    1161. Maximum Level Sum of a Binary Tree
-    2096. Step-By-Step Directions From a Binary Tree Node to Another - backtrack
     971. Flip Binary Tree To Match Preorder Traversal - backtrack
     951. Flip Equivalent Binary Trees - backtrack
     105. Construct Binary Tree from Preorder and Inorder Traversal - backtrack
@@ -180,6 +180,14 @@ public class AllQue {
             }
         }
     }
+    public static void levelOrder_dfs(TreeNode r, int l, List<List<Integer>> ll) {
+        if(r == null) return;
+        int size = ll.size();
+        if (size < l + 1) ll.add(new ArrayList<>());
+        ll.get(l).add(r.val);
+        levelOrder_dfs(r.left, l+1, ll);
+        levelOrder_dfs(r.right, l+1, ll);
+    }
     //---------------------------------------------------------------------------------------
     public static List<List<Integer>> zigzagLevelOrder(TreeNode root) { // 5 7 3 1 4 6 8 - BFS - O(n)
         List<List<Integer>> ans = new ArrayList<>();
@@ -216,6 +224,68 @@ public class AllQue {
             if(cur.right != null) s.add(cur.right);
             if(cur.left != null) s.add(cur.left);
         }
+    }
+    //---------------------------------------------------------------------------------------
+    int maxLevel = 0;
+    public void levelOrder_dfs(TreeNode r, int l, int[] ll) {
+        if(r == null) return;
+        ll[l] += r.val;
+        maxLevel = Math.max(l, maxLevel);
+        levelOrder_dfs(r.left, l+1, ll);
+        levelOrder_dfs(r.right, l+1, ll);
+    }
+    public int maxLevelSum(TreeNode root) { // O(n), O(h unbalanced) or O(logn balanced)
+        int ll[] = new int[10000]; // using array as we know limit or else used list
+        levelOrder_dfs(root, 0, ll);
+        int max = Integer.MIN_VALUE, ind = 0;
+        for(int i = 0; i <= maxLevel; i++) {
+            if(ll[i] > max) {
+                max = ll[i];
+                ind = i;
+            }
+        }
+        return ind+1;
+    }
+    //---------------------------------------------------------------------------------------
+    TreeNode first = null, second = null, prev1 = new TreeNode(Integer.MIN_VALUE);
+    public void recoverTree(TreeNode root) {
+        inorder2(root); // logic : find the 2 abnormalitites and swap it
+        // Swap the two node values
+        int temp = first.val;
+        first.val = second.val;
+        second.val = temp;
+    }
+    private void inorder2(TreeNode node) {
+        if (node == null) return;
+        inorder2(node.left);
+        if (prev1.val > node.val) { // inorder gives sorted so no chance normally for this eg: 123 ok 132 notOk
+            if (first == null) first = prev1; // first time found
+            second = node; // always update the second one
+        }
+        prev1 = node;
+        inorder2(node.right);
+    }
+    //---------------------------------------------------------------------------------------
+    private int prev2 = -1; // to store the previous node value during in-order traversal
+    private int minDiff1 = Integer.MAX_VALUE; // to store the minimum difference, ans
+    public void inorder3(TreeNode root) {
+        if (root == null) return;
+        inorder(root.left);
+        if (prev2 != -1) minDiff1 = Math.min(minDiff1, root.val - prev2);
+        prev = root.val;
+        inorder(root.right);
+    }
+    //---------------------------------------------------------------------------------------
+    int sum = 0;
+    private void reverseInorder(TreeNode node) {
+        if (node == null) return;
+        // Traverse right first (larger values)
+        reverseInorder(node.right);
+        // Update the current node
+        sum += node.val;
+        node.val = sum;
+        // Traverse left (smaller values)
+        reverseInorder(node.left);
     }
     //---------------------------------------------------------------------------------------
     // HEIGHT
@@ -364,6 +434,26 @@ public class AllQue {
         node.left = bstFromInorder(a,l,mid-1);
         node.right = bstFromInorder(a,mid+1,r);
         return node;
+    }
+    //---------------------------------------------------------------------------------------
+    List<Integer> a = new ArrayList<>();
+    public TreeNode bstFromInorder(int l, int r) { // using binary search to get to the middle, as in inorder root is in middle always
+        if(l > r) return null;
+        int mid = l + (r-l) / 2;
+        TreeNode node = new TreeNode(a.get(mid));
+        node.left = bstFromInorder(l,mid-1);
+        node.right = bstFromInorder(mid+1,r);
+        return node;
+    }
+    public void inOrder1(TreeNode root) { // 1 3 4 5 6 7 8 - Sorted - O(n)
+        if(root == null) return;
+        inOrder(root.left);
+        a.add(root.val);
+        inOrder(root.right);
+    }
+    public TreeNode balanceBST(TreeNode root) {
+        inOrder(root);
+        return bstFromInorder(0,a.size()-1);
     }
     //---------------------------------------------------------------------------------------
     // VIEW
@@ -606,7 +696,7 @@ public class AllQue {
         return ans;
     }    
     //---------------------------------------------------------------------------------------
-    // LCA PROBLEMS
+    // LCA
     //---------------------------------------------------------------------------------------
     public static TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
         if (root == null) return null; // If the root is null, return null
@@ -654,7 +744,7 @@ public class AllQue {
         return dfs(root, 1, maxDepth);
     }
     //---------------------------------------------------------------------------------------
-    // BACKTRACK PROBLEMS
+    // BACKTRACK
     //---------------------------------------------------------------------------------------
     public List<String> binaryTreePaths(TreeNode root) {
         List<String> output = new ArrayList();
@@ -709,6 +799,49 @@ public class AllQue {
         dfs(node.right, path, smallest);
         // Backtrack: remove the current node's character from the path
         path.setLength(path.length() - 1); // After traversing both children, removes the last character from path (backtracking).
+    }
+    //---------------------------------------------------------------------------------------
+    // LCA + BackTrack
+    //---------------------------------------------------------------------------------------
+    public TreeNode lca(TreeNode r, int s, int d) { // O(n)
+        if(r == null || r.val == s || r.val == d) return r;
+        TreeNode left = lca(r.left,s,d);
+        TreeNode right = lca(r.right,s,d);
+        if(left == null) return right;
+        if(right == null) return left;
+        return r;
+    }
+    public boolean getPath(TreeNode root, int target, StringBuilder sb) { // worst O(n)
+        if (root == null) return false;
+        if (root.val == target) return true;
+
+        sb.append('L');
+        if (getPath(root.left, target, sb)) return true;
+        sb.setLength(sb.length() - 1); // backtrack
+
+        sb.append('R');
+        if (getPath(root.right, target, sb)) return true;
+        sb.setLength(sb.length() - 1); // backtrack
+
+        return false;
+    }
+    public String getDirections(TreeNode root, int startValue, int destValue) { // O(n), space: O(n for unbalanced) or O(logn  for balanced)
+        // Step 1: Find LCA
+        TreeNode lca = lca(root, startValue, destValue);
+        // Step 2: Get paths from LCA to both nodes
+        StringBuilder pathToStart = new StringBuilder();
+        StringBuilder pathToDest = new StringBuilder();
+
+        getPath(lca, startValue, pathToStart);
+        getPath(lca, destValue, pathToDest);
+
+        // Convert pathToStart to "U"
+        StringBuilder result = new StringBuilder();
+        for (int i = 0; i < pathToStart.length(); i++) {
+            result.append('U');
+        }
+        result.append(pathToDest);
+        return result.toString();
     }
     public static void main(String[] args) {
         TreeNode root = null;

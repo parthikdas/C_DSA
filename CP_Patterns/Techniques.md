@@ -45,4 +45,4 @@
         
 # see merge k sorted lists for infinite input
 
-
+# to check if a char is digit we can use Character.isDigit or ch>=0&&ch<=9 but best "0123456789".indexOf(ch)!=-1 same goes for special char

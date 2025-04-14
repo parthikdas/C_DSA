@@ -36,6 +36,7 @@ import java.util.*;
 */
 public class subArray_subSet {
     // subarray
+    // ([1]), ([1, 2]), ([1, 2, 3]), ([2]), ([2, 3]), ([3]) - Notice it does not contains 1,3 and its not together
     public static List<List<Integer>> getAllSubarrays(int[] arr) { // O(n^2)
         List<List<Integer>> subarrays = new ArrayList<>();
         int n = arr.length;
@@ -49,28 +50,57 @@ public class subArray_subSet {
         return subarrays;
     }
 
-    public static List<List<Integer>> generateSubsets(int[] nums) {
+    // Subset - Here what we are using is powerset
+    // Here order does not matter, (1,2) is same as (2,1)
+        // The total number of subsets (or subsequences) of an array of size ( n ) is ( 2^n ).
+        // The outer loop runs ( 2^n ) times (for each possible subset).
+        // The inner loop runs ( n ) times to check each bit and construct the subset.
+        // Therefore, the overall time complexity is: [ O(n*2^n) ] and space is O(n)
+    public List<List<Integer>> generateSubsets(int[] arr) { // [[], [1], [2], [2, 1], [3], [3, 1], [3, 2], [3, 2, 1]] 
         List<List<Integer>> result = new ArrayList<>();
-        int n = nums.length;
-
-        for (int mask = 0; mask < (1 << n); mask++) {
+        int n = arr.length;
+        int totalSubsets = 1 << n; // 2^n
+        for (int i = 0; i < totalSubsets; i++) {
             List<Integer> subset = new ArrayList<>();
-            for (int i = 0; i < n; i++) {
-                if ((mask & (1 << i)) != 0) {
-                    subset.add(nums[i]);
+            for (int j = 0; j < n; j++) {
+                // Check if jth bit in i is set
+                if ((i & (1 << j)) != 0) {
+                    subset.add(arr[j]);
                 }
             }
             result.add(subset);
         }
-
         return result;
     }
     
+    // Subsequence
+    // Here order does matter, (1,2) is not same as (2,1)
+    // [[], [1], [1, 2], [1, 2, 3], [1, 3], [2], [2, 3], [3]]
+    private static void generateSubsequences(int[] arr, int index, List<Integer> current, List<List<Integer>> result) {
+        // Add the current subsequence to the result
+        result.add(new ArrayList<>(current));
+        // Iterate through the remaining elements
+        for (int i = index; i < arr.length; i++) {
+            // Include arr[i] in the current subsequence
+            current.add(arr[i]);
+            // Recur with the next index
+            generateSubsequences(arr, i + 1, current, result);
+            // Backtrack to explore the next possibility
+            current.remove(current.size() - 1);
+        }
+    }
+
+    // We can leverage the fact that the power set includes all possible subsets of a set, which inherently includes all subsequences as well.
+    // So by using the subset thing we can get all subsequence
+
     public static void main(String[] args) {
-        int[] arr = {1, 2, 3};
+        int[] arr = {2, 6, 2};
         List<List<Integer>> result = getAllSubarrays(arr);
         for (List<Integer> sub : result) {
             System.out.println(sub);
         }
+
+        List<List<Integer>> res = new ArrayList<>();
+        generateSubsequences(arr, 0, new ArrayList<>(), result);
     }
 }
